@@ -14,19 +14,27 @@
     		    
     		    <div class="form-group has-error">
     		        <label for="slug">name <span class="require">*</span> <small>(Dien ten.)</small></label>
-    		        <input type="text" class="form-control" name="slug" value="{{$post->name}}"/>
+    		        <input type="text" class="form-control" name="name" value="{{$post->name}}"/>
     		        <span class="help-block">Field not entered!</span>
     		    </div>
     		    
     		    <div class="form-group">
     		        <label for="title">Email<span class="require">*</span></label>
-    		        <input type="text" class="form-control" name="title" value="{{$post->Email}}"/>
+    		        <input type="text" class="form-control" name="email" value="{{$post->Email}}"/>
     		    </div>
     		    
-    		    <div class="form-group">
-    		        <label for="content">content</label>
-    		        <textarea rows="5" class="form-control" name="content">{{$post->content}} </textarea>
-    		    </div>
+				<div class="form-group">
+					<input type="date" name="birth_date">
+				</div>
+
+				<div class="custom-file">
+					<input type="file" class="custom-file-input" id="inputGroupFile02" name="image">
+					<label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+				  </div>
+				  <div class="input-group-append">
+					<span class="input-group-text" id="">Upload</span>
+				  </div>
+				</div>
     		    
 				<div class="form-group">
 					<label for="$categories">Choose a car:</label>

@@ -6,6 +6,8 @@
         <th>Id</th>
         <th>name</th>
         <th>Email</th>
+        <th>image</th>
+        <th>birth_name</th>
       </tr>
     </thead>
     <tbody>
@@ -14,6 +16,8 @@
       <td>{{$post->id}}</td>
       <td>{{$post->name}}</td>
       <td>{{$post->email}}</td>
+      <td><img width="100" height="100" src="{{$post->image}}" alt=""></td>
+      <td>{{$post->birth_name}}</td>
      <td>
          <a class="btn btn-warning" href="{{route('posts.edit', $post->id)}}">Edit</a>
          <button type="button" class="btn btn-danger delete-post" data-id="{{ $post->id }}">Delete</button>

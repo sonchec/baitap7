@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::query()->paginate(15);
+        $posts = Post::query()->orderByDesc('id')->paginate(15);
         return view('posts.index', ['posts'=> $posts]);
         $posts->nextPageUrl();
     }
@@ -38,11 +39,22 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-       
-        $post = Post::query()->create($request->only('name','email','content'));
-        $post->categories()->sync($request->input('categories'));
+    public function store(StorePost $request)
+    {      
+    //       $request ->validate([
+    //     'name'=>'required|unique:posts',
+    //     'email'=>'required',
+    // ]);
+    
+    return 
+        $post = Post::query()->create($request->only('name','email','birth_date'));
+        // $post->categories()->sync($request->input('categories'));
+        // return redirect()->route('posts.index');
+        if ($file = $request->file('image')){
+            $filename =date('YmdHis'). $file->getClientOriginalName();
+            $file->move(public_path('image'),$filename);
+            $post->update(['image'=>'/image'.'/'.$filename]);
+        }
         return redirect()->route('posts.index');
     }
 
@@ -78,8 +90,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {    dd($request->input('categories'));
+    public function update(Request $request, $id ,Post $post)
+    {   
+         $this->validate($request,[
+        'name'=>'required',
+        'email'=>'unique:pots,email,'.$post->id,
+    ]);
+        // dd($request->input('categories'));
         $post = Post::query()->findOrFail($id);
         $post ->update($request->only('name','email'));
         $post->categories()->sync($request->input('categories'));
